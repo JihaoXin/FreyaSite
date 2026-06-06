@@ -1,0 +1,25 @@
+---
+import Menu from './Menu.astro';
+import Navigation from './Navigation.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import LangToggle from './LangToggle.astro';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<header>
+    <nav>
+        <div class="nav-left">
+            <Menu />
+            <Navigation lang={lang} />
+        </div>
+        <div class="nav-right">
+            <LangToggle />
+            <ThemeToggle />
+        </div>
+    </nav>
+</header>

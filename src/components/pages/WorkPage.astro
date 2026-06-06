@@ -1,0 +1,112 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getContent } from '../../i18n/content';
+import { NAV } from '../../i18n/ui';
+import type { Lang } from '../../i18n/utils';
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const c = getContent(lang);
+const pageTitle = NAV.find((n) => n.slug === 'work/')![lang];
+
+const intro = {
+    en: 'A selection of brand, marketing, and communications work, grouped by focus area. Most was delivered at China Life Insurance, with earlier agency experience at Weber Shandwick.',
+    zh: '精选的品牌、营销与传播案例，按方向分组。多数完成于中国人寿，早期为万博宣伟的代理经验。',
+}[lang];
+---
+
+<Layout lang={lang} pageTitle={pageTitle}>
+    <div class="page-container">
+        <h1>{pageTitle}</h1>
+        <p class="intro-text">{intro}</p>
+
+        {c.work.map((group) => (
+            <section>
+                <h2>{group.category}</h2>
+                <div class="work-grid">
+                    {group.projects.map((project) => (
+                        <article class="work-card">
+                            <div class="work-card-head">
+                                <h3>{project.title}</h3>
+                                <span class="work-card-org">{project.org}</span>
+                            </div>
+                            <p class="work-card-desc">{project.description}</p>
+                            {project.metrics.length > 0 && (
+                                <ul class="work-metrics">
+                                    {project.metrics.map((m) => (
+                                        <li class="metric-chip">{m}</li>
+                                    ))}
+                                </ul>
+                            )}
+                        </article>
+                    ))}
+                </div>
+            </section>
+        ))}
+    </div>
+</Layout>
+
+<style>
+    .work-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 1.25rem;
+    }
+    .work-card {
+        background-color: var(--color-bg-alt);
+        border: 1px solid var(--color-border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        transition: transform var(--transition-fast), border-color var(--transition-fast);
+    }
+    @media (hover: hover) {
+        .work-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--color-accent);
+        }
+    }
+    .work-card-head {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    .work-card-head h3 {
+        margin: 0;
+        font-size: 1.15rem;
+        color: var(--color-primary);
+        line-height: 1.3;
+    }
+    .work-card-org {
+        font-size: 0.85rem;
+        color: var(--color-accent);
+        font-weight: 600;
+    }
+    .work-card-desc {
+        margin: 0;
+        font-size: 0.95rem;
+        color: var(--color-text-muted);
+        line-height: 1.6;
+    }
+    .work-metrics {
+        list-style: none;
+        padding: 0;
+        margin: 0.25rem 0 0 0;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    .metric-chip {
+        font-size: 0.8rem;
+        font-weight: 500;
+        color: var(--color-text);
+        background-color: var(--color-bg);
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+        padding: 0.25rem 0.7rem;
+    }
+</style>

@@ -1,0 +1,178 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Portrait from '../Portrait.astro';
+import SocialIcons from '../SocialIcons.astro';
+import { SITE_DATA } from '../../constants';
+import { getContent } from '../../i18n/content';
+import { t } from '../../i18n/ui';
+import { NAV } from '../../i18n/ui';
+import type { Lang } from '../../i18n/utils';
+
+import '../../styles/about.css';
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const c = getContent(lang);
+const ui = t(lang);
+const name = SITE_DATA.name[lang];
+const pageTitle = NAV.find((n) => n.slug === 'about/')![lang];
+---
+
+<Layout lang={lang} pageTitle={pageTitle}>
+    <div class="page-container">
+        <h1>{pageTitle}</h1>
+
+        <div class="about-content">
+            <div class="about-intro-wrapper centered-column">
+                <div class="about-header centered-column">
+                    <Portrait size={120} initials="FZ" />
+                    <h2 class="about-name">{name}</h2>
+                </div>
+                <p class="intro-text">{c.intro}</p>
+            </div>
+
+            <section>
+                <h2>{ui.statement}</h2>
+                <div class="info-card">
+                    <p>{c.statement}</p>
+                </div>
+            </section>
+
+            <section>
+                <h2>{ui.expertise}</h2>
+                <ul class="custom-list">
+                    {c.expertise.map((item) => (
+                        <li>
+                            <span class="list-item-title">{item.title}</span>
+                            <span class="list-item-description">{item.description}</span>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+            <section>
+                <h2>{ui.experience}</h2>
+                <ul class="work-list icon-list">
+                    {c.positions.map((pos) => (
+                        <li>
+                            <div class="list-entry">
+                                <h3>{pos.role}</h3>
+                                <p class="institution">{pos.org}</p>
+                                <p class="grade">{pos.period}</p>
+                                <p>{pos.summary}</p>
+                                <ul class="entry-highlights">
+                                    {pos.highlights.map((h) => (
+                                        <li>{h}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+            <section>
+                <h2>{ui.education}</h2>
+                <ul class="education-list icon-list">
+                    {c.education.map((edu) => (
+                        <li>
+                            <div class="education-entry">
+                                <h3>{edu.degree}</h3>
+                                <p class="institution">{edu.school}</p>
+                                <p class="grade">{edu.period}</p>
+                                {edu.details.map((d) => (
+                                    <p>{d}</p>
+                                ))}
+                            </div>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+            <section>
+                <h2>{ui.awards}</h2>
+                <ul class="distinctions-list icon-list">
+                    {c.awards.map((award) => (
+                        <li>
+                            <span class="list-item-title">{award.title}</span>
+                            <span class="list-item-description">{award.description}</span>
+                        </li>
+                    ))}
+                </ul>
+            </section>
+
+            <section>
+                <h2>{ui.contact}</h2>
+                <p class="intro-text contact-intro">{ui.contactIntro}</p>
+                <ul class="contact-list">
+                    <li>
+                        <span class="contact-label">{ui.email}</span>
+                        <a href={`mailto:${SITE_DATA.email}`}>{SITE_DATA.email}</a>
+                    </li>
+                    <li>
+                        <span class="contact-label">{ui.phone}</span>
+                        <a href={`tel:${SITE_DATA.phoneHref}`}>{SITE_DATA.phoneDisplay}</a>
+                    </li>
+                    <li>
+                        <span class="contact-label">{ui.wechat}</span>
+                        <span class="contact-value">{SITE_DATA.wechat}</span>
+                    </li>
+                </ul>
+                <SocialIcons size={28} gap="1.25rem" class="contact-socials" />
+            </section>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .entry-highlights {
+        margin: 0.75rem 0 0 0;
+        padding-left: 1.1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+    }
+    .entry-highlights li {
+        font-size: 0.95rem;
+        color: var(--color-text-muted);
+        line-height: 1.6;
+        padding-left: 0.25rem;
+        position: static;
+    }
+    /* Cancel the inherited briefcase icon from .work-list li::before on
+       the nested highlight bullets — they use their own list markers. */
+    .entry-highlights li::before {
+        content: none;
+        display: none;
+    }
+    .entry-highlights li::marker {
+        color: var(--color-accent);
+    }
+
+    .contact-intro {
+        margin-bottom: 1.25rem;
+    }
+    .contact-list {
+        list-style: none;
+        padding: 0;
+        margin: 0 0 1.75rem 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.6rem;
+    }
+    .contact-list li {
+        display: flex;
+        align-items: baseline;
+        gap: 1rem;
+    }
+    .contact-label {
+        flex: 0 0 5.5rem;
+        font-weight: 600;
+        color: var(--color-primary);
+    }
+    .contact-value {
+        color: var(--color-text);
+    }
+</style>

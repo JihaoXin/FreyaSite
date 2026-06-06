@@ -1,0 +1,16 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import Hero from '../Hero.astro';
+import type { Lang } from '../../i18n/utils';
+
+import '../../styles/home.css';
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+---
+
+<Layout lang={lang} pageTitle="">
+    <Hero lang={lang} />
+</Layout>

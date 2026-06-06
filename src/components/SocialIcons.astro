@@ -1,0 +1,116 @@
+---
+import { SITE_DATA } from '../constants';
+
+interface Props {
+    size?: number;
+    gap?: string;
+    class?: string;
+}
+
+const { size = 24, gap = '1.5rem', class: className } = Astro.props;
+
+const email = SITE_DATA.email;
+const phoneHref = SITE_DATA.phoneHref;
+const wechat = SITE_DATA.wechat;
+const { linkedin, twitter, x, github } = SITE_DATA;
+---
+
+<div class:list={['social-icons', className]} style={{ gap }}>
+    {email && (
+        <a href={`mailto:${email}`} aria-label="Email" title={email}>
+            <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+                <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
+            </svg>
+        </a>
+    )}
+    {phoneHref && (
+        <a href={`tel:${phoneHref}`} aria-label="Phone" title={SITE_DATA.phoneDisplay}>
+            <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+                <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z" />
+            </svg>
+        </a>
+    )}
+    {wechat && (
+        <button
+            type="button"
+            class="wechat-copy"
+            data-wechat={wechat}
+            aria-label={`WeChat: ${wechat} (click to copy)`}
+            title={`WeChat: ${wechat}`}
+        >
+            <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+                <path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 0 0 .167-.054l1.903-1.114a.864.864 0 0 1 .717-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.621-6.456 1.681-1.704 3.949-2.426 6.156-2.36-.665-3.554-4.32-6.018-8.545-6.018zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18z" />
+                <path d="M24 14.74c0-3.413-3.176-5.83-6.222-5.882-.107-.003-.213-.004-.32-.003-1.797.052-3.586.65-4.96 2.025-1.531 1.534-2.158 3.626-1.555 5.69 1.52 4.453 7.6 4.477 9.99 2.299l1.585.926c.057.045.122.061.184.061.157 0 .283-.131.283-.295 0-.073-.027-.144-.045-.213l-.39-1.48a.59.59 0 0 1 .213-.665C23.84 18.398 24 16.755 24 14.74zM15.62 13.372a.976.976 0 0 1-.969-.982c0-.542.434-.982.969-.982.535 0 .969.44.969.982a.976.976 0 0 1-.969.982zm4.844 0a.976.976 0 0 1-.969-.982c0-.542.434-.982.969-.982.535 0 .969.44.969.982a.976.976 0 0 1-.969.982z" />
+            </svg>
+        </button>
+    )}
+    {linkedin && (
+        <a href={`https://linkedin.com/in/${linkedin}`} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+                <path d="M20.5 2h-17A1.5 1.5 0 002 3.5v17A1.5 1.5 0 003.5 22h17a1.5 1.5 0 001.5-1.5v-17A1.5 1.5 0 0020.5 2zM8 19H5v-9h3zM6.5 8.25a1.75 1.75 0 110-3.5 1.75 1.75 0 010 3.5zM19 19h-3v-4.74c0-1.42-.6-1.93-1.38-1.93A1.74 1.74 0 0013 14.19V19h-3v-9h2.9v1.3a3.11 3.11 0 012.7-1.4c1.55 0 3.4 1.08 3.4 3.93z" />
+            </svg>
+        </a>
+    )}
+    {github && (
+        <a href={`https://github.com/${github}`} aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+                <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0112 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.579.688.481C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+            </svg>
+        </a>
+    )}
+    {twitter && (
+        <a href={`https://twitter.com/${twitter}`} aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+                <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+            </svg>
+        </a>
+    )}
+    {x && (
+        <a href={`https://x.com/${x}`} aria-label="X" target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 24 24" width={size} height={size} fill="currentColor">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+            </svg>
+        </a>
+    )}
+</div>
+
+<script>
+    // Copy the WeChat ID to the clipboard on click, with brief visual feedback.
+    if (!(window as any).__wechatCopyInit) {
+        (window as any).__wechatCopyInit = true;
+        document.addEventListener('click', async (e) => {
+            const btn = (e.target as HTMLElement)?.closest('.wechat-copy') as HTMLElement | null;
+            if (!btn) return;
+            const id = btn.getAttribute('data-wechat') || '';
+            try {
+                await navigator.clipboard.writeText(id);
+            } catch {
+                /* clipboard may be unavailable; the title still shows the id */
+            }
+            const original = btn.getAttribute('title') || '';
+            btn.setAttribute('title', 'Copied!');
+            btn.classList.add('copied');
+            window.setTimeout(() => {
+                btn.setAttribute('title', original);
+                btn.classList.remove('copied');
+            }, 1500);
+        });
+    }
+</script>
+
+<style>
+    .wechat-copy {
+        background: none;
+        border: none;
+        padding: 0;
+        margin: 0;
+        cursor: pointer;
+        color: inherit;
+        display: flex;
+        align-items: center;
+        transition: color var(--transition-fast), transform var(--transition-fast);
+    }
+    .wechat-copy.copied {
+        color: var(--color-accent);
+    }
+</style>

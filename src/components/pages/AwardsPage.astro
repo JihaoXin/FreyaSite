@@ -1,0 +1,53 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getContent } from '../../i18n/content';
+import { t, NAV } from '../../i18n/ui';
+import type { Lang } from '../../i18n/utils';
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const c = getContent(lang);
+const ui = t(lang);
+const pageTitle = NAV.find((n) => n.slug === 'awards/')![lang];
+
+const intro = {
+    en: "Awards, honors, and a few of the marquee brand moments I've helped bring to life.",
+    zh: '奖项、荣誉，以及我参与打造的一些标志性品牌时刻。',
+}[lang];
+---
+
+<Layout lang={lang} pageTitle={pageTitle}>
+    <div class="page-container">
+        <h1>{pageTitle}</h1>
+        <p class="intro-text">{intro}</p>
+
+        <section>
+            <h2>{ui.awards}</h2>
+            <ul class="custom-list">
+                {c.awards.map((award) => (
+                    <li>
+                        <span class="list-item-title">{award.title}</span>
+                        <span class="list-item-description">{award.description}</span>
+                    </li>
+                ))}
+            </ul>
+        </section>
+
+        <section>
+            <h2>{ui.activities}</h2>
+            <ul class="custom-list">
+                {c.activities.map((act) => (
+                    <li>
+                        <span class="list-item-title">{act.title}</span>
+                        <span class="list-item-description">
+                            {act.meta}
+                            {act.detail && <span class="extra-links">{act.detail}</span>}
+                        </span>
+                    </li>
+                ))}
+            </ul>
+        </section>
+    </div>
+</Layout>

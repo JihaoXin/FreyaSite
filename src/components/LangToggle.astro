@@ -1,0 +1,44 @@
+---
+import { altLang, getLangFromUrl } from '../i18n/utils';
+
+const lang = getLangFromUrl(Astro.url.pathname);
+const alt = altLang(Astro.url.pathname);
+// Label shows the language you'll switch TO.
+const label = alt.lang === 'zh' ? '中文' : 'EN';
+const aria = lang === 'zh' ? 'Switch to English' : '切换到中文';
+---
+
+<a class="lang-toggle" href={alt.href} aria-label={aria} hreflang={alt.lang}>
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="12" cy="12" r="10"></circle>
+        <path d="M2 12h20"></path>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+    </svg>
+    <span>{label}</span>
+</a>
+
+<style>
+    .lang-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: 0.4rem 0.6rem;
+        border-radius: 999px;
+        color: var(--color-primary);
+        font-size: 0.85rem;
+        font-weight: 600;
+        line-height: 1;
+        border: 1px solid var(--color-border);
+        transition: color var(--transition-fast), border-color var(--transition-fast);
+    }
+    @media (hover: hover) {
+        .lang-toggle:hover {
+            color: var(--color-accent);
+            border-color: var(--color-accent);
+        }
+    }
+    .lang-toggle:active {
+        color: var(--color-accent);
+        border-color: var(--color-accent);
+    }
+</style>

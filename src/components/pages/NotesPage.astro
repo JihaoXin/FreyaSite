@@ -1,0 +1,42 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { t, NAV } from '../../i18n/ui';
+import type { Lang } from '../../i18n/utils';
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const ui = t(lang);
+const pageTitle = NAV.find((n) => n.slug === 'notes/')![lang];
+---
+
+<Layout lang={lang} pageTitle={pageTitle}>
+    <div class="page-container">
+        <h1>{pageTitle}</h1>
+        <div class="info-card notes-empty">
+            <p class="notes-soon">{ui.comingSoon}</p>
+            <p class="notes-msg">{ui.notesEmpty}</p>
+        </div>
+    </div>
+</Layout>
+
+<style>
+    .notes-empty {
+        text-align: center;
+    }
+    .notes-soon {
+        font-size: 1.4rem !important;
+        font-weight: 700;
+        color: var(--color-primary) !important;
+        margin-bottom: 0.75rem !important;
+    }
+    .notes-msg {
+        font-size: 1rem !important;
+        color: var(--color-text-muted) !important;
+        margin-bottom: 0 !important;
+        max-width: 36rem;
+        margin-left: auto;
+        margin-right: auto;
+    }
+</style>

@@ -1,0 +1,18 @@
+---
+import { SITE_DATA } from '../constants';
+import SocialIcons from './SocialIcons.astro';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const name = SITE_DATA.name[lang];
+---
+
+<div class="footer-container">
+    <div class="footer-content">
+        <div class="copyright">&copy; {SITE_DATA.year} {name}</div>
+        <SocialIcons size={18} gap="1.0rem" class="footer-socials" />
+    </div>
+</div>

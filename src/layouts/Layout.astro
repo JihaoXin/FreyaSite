@@ -1,0 +1,73 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE_DATA } from '../constants';
+import { getContent } from '../i18n/content';
+import { altLang, type Lang } from '../i18n/utils';
+
+import '../styles/global.css';
+
+interface Props {
+    lang: Lang;
+    pageTitle?: string;
+}
+const { lang, pageTitle = '' } = Astro.props;
+
+const name = SITE_DATA.name[lang];
+const description = getContent(lang).metaDescription;
+const title = `${name}${pageTitle ? ` | ${pageTitle}` : ''}`;
+const htmlLang = lang === 'zh' ? 'zh-CN' : 'en';
+
+// hreflang alternate (the same page in the other language)
+const alt = altLang(Astro.url.pathname);
+const altHref = new URL(alt.href, SITE_DATA.siteUrl).toString();
+const altHreflang = alt.lang === 'zh' ? 'zh-CN' : 'en';
+const canonical = new URL(Astro.url.pathname, SITE_DATA.siteUrl).toString();
+---
+
+<!doctype html>
+<html lang={htmlLang}>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <link rel="icon" type="image/svg+xml" href={`${import.meta.env.BASE_URL}favicon.svg`} />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonical} />
+        <link rel="alternate" hreflang={altHreflang} href={altHref} />
+        <link rel="alternate" hreflang={htmlLang} href={canonical} />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:type" content="website" />
+        <meta property="og:locale" content={lang === 'zh' ? 'zh_CN' : 'en_US'} />
+        <script is:inline>
+            const theme = (() => {
+                if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+                    return localStorage.getItem('theme');
+                }
+                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                    return 'dark';
+                }
+                return 'light';
+            })();
+
+            if (theme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+            window.localStorage.setItem('theme', theme);
+        </script>
+    </head>
+    <body>
+        <Header lang={lang} />
+        <main>
+            <slot />
+        </main>
+        <Footer lang={lang} />
+        <script>
+            import '../scripts/menu.js';
+        </script>
+    </body>
+</html>

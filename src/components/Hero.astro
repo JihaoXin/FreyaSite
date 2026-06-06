@@ -1,0 +1,26 @@
+---
+import SocialIcons from './SocialIcons.astro';
+import Portrait from './Portrait.astro';
+import { SITE_DATA } from '../constants';
+import type { Lang } from '../i18n/utils';
+
+interface Props {
+    lang: Lang;
+}
+const { lang } = Astro.props;
+const name = SITE_DATA.name[lang];
+const tagline = SITE_DATA.tagline[lang];
+---
+
+<section class="hero">
+    <div class="hero-content">
+        <div class="portrait-container">
+            <Portrait size={220} />
+        </div>
+        <div class="hero-text">
+            <h1>{name}</h1>
+            <p class="tagline">{tagline}</p>
+            <SocialIcons size={40} gap="1.5rem" />
+        </div>
+    </div>
+</section>
