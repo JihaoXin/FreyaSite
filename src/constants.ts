@@ -30,8 +30,7 @@ export const SITE_DATA = {
     scholar: '',
 
     // Base URL of the deployed site (used for Open Graph / sharing meta tags).
-    // Update to https://freyazhang.com once the custom domain is live.
-    siteUrl: 'https://jihaoxin.github.io/FreyaSite/',
+    siteUrl: 'https://freyazhang.com',
 
     // Footer copyright year
     year: 2026,

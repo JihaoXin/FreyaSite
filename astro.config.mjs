@@ -5,18 +5,16 @@ import { defineConfig } from 'astro/config';
 //
 // Deployment notes
 // ----------------
-// Currently deployed as a GitHub Pages *project* site at:
-//   https://jihaoxin.github.io/FreyaSite/
-// That is why `base` is set to '/FreyaSite/'.
+// Deployed to GitHub Pages with the custom domain freyazhang.com, which serves
+// from the domain root — so `base` is '/'. The domain is set both in the repo's
+// Pages settings and via public/CNAME.
 //
-// When you switch to the custom domain (freyazhang.com):
-//   1. set `base: '/'`  (or delete the `base` line)
-//   2. set `site: 'https://freyazhang.com'`
-//   3. add a `public/CNAME` file containing the single line: freyazhang.com
-//   4. configure the domain in GitHub → Settings → Pages → Custom domain
+// If you ever remove the custom domain and want the github.io project URL
+// (https://jihaoxin.github.io/FreyaSite/) instead, set `base: '/FreyaSite/'`
+// and `site: 'https://jihaoxin.github.io'`, and delete public/CNAME.
 export default defineConfig({
-  site: 'https://jihaoxin.github.io',
-  base: '/FreyaSite/',
+  site: 'https://freyazhang.com',
+  base: '/',
   i18n: {
     locales: ['en', 'zh'],
     defaultLocale: 'en',

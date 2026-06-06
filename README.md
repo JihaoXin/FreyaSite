@@ -13,7 +13,7 @@ Requires [Node.js 18+](https://nodejs.org/).
 
 ```bash
 npm install
-npm run dev        # http://localhost:4321/FreyaSite/
+npm run dev        # http://localhost:4321/
 npm run build      # output to dist/
 npm run preview    # preview the production build
 ```
@@ -48,23 +48,21 @@ monogram markup for an `<Image>` from `astro:assets`.
 ## Deployment
 
 Pushing to `main` triggers GitHub Actions, which builds and deploys to GitHub
-Pages (`.github/workflows/deploy.yaml`). One-time setup: in the repo go to
-**Settings → Pages → Build and deployment** and set the source to **GitHub Actions**.
+Pages (`.github/workflows/deploy.yaml`). The Pages source is already set to
+**GitHub Actions** and the custom domain **freyazhang.com** is configured, so the
+site builds for the domain root (`base: '/'`, with `public/CNAME`).
 
-Currently live at **https://jihaoxin.github.io/FreyaSite/**.
+### DNS (Cloudflare)
 
-### Switching to the custom domain (freyazhang.com)
+`www.freyazhang.com` already points at GitHub Pages. The apex `freyazhang.com`
+still needs records. In Cloudflare add either:
 
-The site is configured for the project-path URL above. To move it to the custom
-domain, in `astro.config.mjs`:
+- an `A` record for `@` → each of `185.199.108.153`, `185.199.109.153`,
+  `185.199.110.153`, `185.199.111.153` (Cloudflare flattens this automatically), or
+- keep the apex as the GitHub Pages target and rely on Cloudflare CNAME flattening.
 
-1. set `base: '/'` (or delete the `base` line)
-2. set `site: 'https://freyazhang.com'`
-3. add a file `public/CNAME` containing one line: `freyazhang.com`
-4. in **Settings → Pages → Custom domain**, enter `freyazhang.com`
-5. point DNS (Cloudflare) at GitHub Pages — a `CNAME` record for `www` to
-   `jihaoxin.github.io`, plus the four GitHub Pages `A` records (or a flattened
-   `CNAME`/`ALIAS`) for the apex `freyazhang.com`.
+Set the records to **DNS only** (grey cloud) initially so GitHub can issue the
+TLS certificate, then enable **Enforce HTTPS** in **Settings → Pages**.
 
 ## Credits
 
